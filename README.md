@@ -39,17 +39,22 @@ This Shopify app enhances the merchant and customer experience by allowing dynam
 7. Verify the selected date is saved as a **Metafield** on the order.
 
 ## Project Structure
+```text
 /app
   /routes
     - index.tsx (Merchant Dashboard)
     - api/blocked-dates.ts (Metafield Saving Endpoint)
   shopify.server.ts
+
 /extensions
   /checkout-date-picker
     /src
       - Extension.tsx (Checkout UI Extension)
     shopify.extension.toml
+
 shopify.app.toml
+```
+
 
 
 ## Notes
