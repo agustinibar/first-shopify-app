@@ -43,11 +43,14 @@ This Shopify app enhances the merchant and customer experience by allowing dynam
   /routes
     - index.tsx (Merchant Dashboard)
     - api/blocked-dates.ts (Metafield Saving Endpoint)
-    - shopify.server.ts
-  /extensions
-    /checkout-date-picker
-      - src/Extension.tsx (Checkout UI Extension)
-      - shopify.extension.toml
+  shopify.server.ts
+/extensions
+  /checkout-date-picker
+    /src
+      - Extension.tsx (Checkout UI Extension)
+    shopify.extension.toml
+shopify.app.toml
+
 
 ## Notes
 - **API Scopes**: `read_metafields`, `write_metafields`, `read_orders`, `write_orders`
