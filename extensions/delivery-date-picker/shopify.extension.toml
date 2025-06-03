@@ -38,9 +38,9 @@ block_progress = true
 [[extensions.metafields]]
 namespace = "delivery"
 key= "blocked_dates"
-# [[extensions.metafields]]
-# namespace = "my_namespace"
-# key = "my_other_key"
+[[extensions.metafields]]
+namespace = "custom"
+key = "locked_delivery_data"
 
 # Defines settings that will be collected from merchants installing
 # your extension. Learn more:

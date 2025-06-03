@@ -1,36 +1,39 @@
 import {
   reactExtension,
   DatePicker,
+  useAppMetafields,
   useApplyMetafieldsChange,
 } from '@shopify/ui-extensions-react/checkout';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
-export default reactExtension(
-  'purchase.checkout.block.render',
-  () => <Extension />
-);
+export default reactExtension('purchase.checkout.block.render', () => <Extension />);
 
 function Extension() {
-  const [blockedDates, setBlockedDates] = useState<string[]>([]);
   const [selectedDate, setSelectedDate] = useState<string | undefined>(undefined);
+
+  const metafields = useAppMetafields({
+    namespace: 'custom',
+    key: 'locked_delivery_data',
+  });
+
+  const lockedDeliveryData = metafields[0]?.metafield.value;
 
   const applyMetafieldsChange = useApplyMetafieldsChange();
 
-  useEffect(() => {
-    const fetchBlockedDates = async () => {
-      try {
-        const response = await fetch('https://chains-thin-compound-informational.trycloudflare.com/api/blocked-dates');
-        const data = await response.json();
-        if (data?.blockedDates) {
-          setBlockedDates(data.blockedDates);
-        }
-      } catch (error) {
-        console.error("Error fetching blocked dates:", error);
-      }
-    };
+  const daysOfWeekAsString = [
+    "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"
+  ];
 
-    fetchBlockedDates();
-  }, []);
+  let blockedDates: string[] = [];
+  let blockedWeekdays: number[] = [];
+  let blockedRanges: { start: string; end: string }[] = [];
+
+  if (lockedDeliveryData) {
+    const parsed = JSON.parse(lockedDeliveryData.toString());
+    blockedDates = parsed.blockedDates || [];
+    blockedWeekdays = parsed.blockedWeekdays || [];
+    blockedRanges = parsed.blockedRanges || [];
+  }
 
   const handleDateChange = async (date: string) => {
     setSelectedDate(date);
@@ -48,7 +51,11 @@ function Extension() {
     <DatePicker
       selected={selectedDate}
       onChange={handleDateChange}
-      disabled={blockedDates}
+      disabled={[
+        ...blockedDates,
+        ...blockedWeekdays.map((day) => daysOfWeekAsString[day]),
+        ...blockedRanges
+      ]}
     />
   );
 }
