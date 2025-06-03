@@ -60,10 +60,12 @@ shopify.app.toml
 ## Notes
 - **API Scopes**: `read_metafields`, `write_metafields`, `read_orders`, `write_orders`
 - **Extension Metafield Access**: Configured in `shopify.extension.toml`:
+```text
   toml
   [[extensions.metafields]]
   namespace = "custom"
   key = "locked_delivery_data"
+```
 
 ## Developed by *Agustín Ibar*
 
