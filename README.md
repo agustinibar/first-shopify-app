@@ -49,7 +49,7 @@ This Shopify app enhances the merchant and customer experience by allowing dynam
 /extensions
   /checkout-date-picker
     /src
-      - Extension.tsx (Checkout UI Extension)
+      - Checkout.tsx (Checkout UI Extension)
     shopify.extension.toml
 
 shopify.app.toml
